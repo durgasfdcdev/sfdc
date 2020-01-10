@@ -1,0 +1,43 @@
+<apex:page standardcontroller="InternalDepartment__c" extensions="AllActiveJobPosting">
+
+<apex:form >
+<apex:pageBlock >
+
+        <apex:pageBlockButtons >
+            <apex:commandButton value="View related applications and applicants" action="{!clicked}" rerender="table2" />
+        </apex:pageBlockButtons>
+
+
+        <apex:pageBlockSection title="All Active Job Postings" columns="1">
+        
+                <apex:pageblocktable value="{!jpwrapperlist}" var="jpwl">
+                    <apex:column >
+                    <apex:inputcheckbox value="{!jpwl.selected}"  />
+                    </apex:column>
+                    <apex:column value="{!jpwl.clickedjp.Job_Id__c }"/>
+                    <apex:column value="{!jpwl.clickedjp.Name}"/>
+                    <apex:column value="{!jpwl.clickedjp.Active_Job__c}"/>
+                </apex:pageBlockTable> 
+        
+        </apex:pageblockSection>
+        <apex:pageblockSection columns="1" id="table2" title="related applications and applicants" >
+        
+        <apex:pageBlockTable value="{!linkedapplication }" var="ajapplns" title="Applied Applicants" rendered="{!linkedapplication != null}" >
+                        <apex:column value="{!ajapplns.IndividualApplicant__c}" title="ID" />
+                        <apex:column value="{!ajapplns.IndividualApplicant__r.Id}" title="ID" />
+                        <apex:column value="{!ajapplns.IndividualApplicant__r.Name}" title="Name"/>
+                                       </apex:pageBlockTable>
+        
+                    <apex:pageBlockTable value="{!linkedapplication }" var="ajpc" title="Selected Applications" rendered="{!linkedapplication != null}" >
+                        <apex:column value="{!ajpc.JobPosting__c}" title=" Active Job Postings "/>
+                        <apex:column value="{!ajpc.Name}" title="Name" />
+                        <apex:column value="{!ajpc.ActiveApplication__c}" title="Active Status" />
+                    </apex:pageBlockTable>         
+                
+                                    
+        </apex:pageblockSection>
+        
+</apex:pageBlock>
+</apex:form>
+
+</apex:page>
